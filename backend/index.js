@@ -1,6 +1,9 @@
+// mongodb://localhost:27017/
+const MONGODB_URI ='mongodb+srv://bookingUser:passwordBooking@cluster0.tifpz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+
 // To connect with your mongoDB database
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/', {
+mongoose.connect(MONGODB_URI, {
     dbName: 'movieBooking',
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -31,7 +34,8 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 const { Int32 } = require('mongodb');
-console.log("App listen at port 5000");
+const PORT = process.env.PORT || 5000;
+//console.log("App listen at port 5000");
 app.use(express.json());
 app.use(cors());
 app.get("/bookings", (req, resp) => {
@@ -47,6 +51,24 @@ app.get("/bookings", (req, resp) => {
         resp.send(result.seatsIndex);
     });
 });
+
+/*
+const data = {
+    theaterName: "THEATER",
+    movieName: "MOVIE",
+    seatsIndex: []
+};
+
+const user = new User(data);
+
+user.save((err) => {
+    if(err){
+        console.log('Ooops, something went wrong.');
+    }
+    else {
+        console.log('Data has been saved!');
+    }
+});*/
 
 app.put("/bookings", async (req, resp) => {
     try {
@@ -66,4 +88,4 @@ app.put("/bookings", async (req, resp) => {
         resp.send("Something Went Wrong");
     }
 });
-app.listen(5000);
+app.listen(PORT, console.log(`Server is starting at ${PORT}`));
