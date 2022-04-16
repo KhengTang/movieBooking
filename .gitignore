@@ -1,2 +1,5 @@
 # Ignore files with extension `.exe`
 *.exe
+
+# Ignore folder
+node_modules/
