@@ -47,8 +47,16 @@ app.get("/bookings", (req, resp) => {
     // If you see App is working means
     // backend working properly
     User.findOne({}, {}, {sort: {'date' : -1} }, function(err, result) {
-        console.log(result.seatsIndex);
-        resp.send(result.seatsIndex);
+        if(err){
+            console.log(err);
+        }
+        if(!result) {
+            console.log("Empty result");
+        }
+        else {
+            console.log(result.seatsIndex);
+            resp.send(result.seatsIndex);
+        }
     });
 });
 

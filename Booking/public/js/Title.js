@@ -14,6 +14,7 @@ export default class Title {
                 'http://localhost:5000/bookings', {
                     method: "get"
             })
+            
             res = await res.json();
             console.log(res);
 
