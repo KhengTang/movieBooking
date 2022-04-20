@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Search Movies</h1>
+    <form action="#" th:action="@{/search}" th:object="${searchRequestDTO}" method="get">
+        Title: <input type="text" name="title" th:field="*{title}"/>
+        <!--<button name="submit" type="submit" value="0">Submit</button>-->
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>
