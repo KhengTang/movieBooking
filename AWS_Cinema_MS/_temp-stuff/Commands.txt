@@ -1,0 +1,63 @@
+docker-compose down --remove-orphans
+docker-compose up --force-recreate -d
+
+mongodb:\rootuser:rootPass@0.0.0.0:27017?authSource=admin&authMechanism=SCRAM-SHA-1&connectTimeoutMS=10000&compressors=none
+
+docker run -d \
+-p 27017:27017 \
+-e MONGO_INITDB_ROOT_USERNAME=rootuser \
+-e MONGO_INITDB_ROOT_PASSWORD=rootpass \
+--name mongodb \
+-v mongodb-data:/data/db \
+--net mongo-express-network \
+mongo
+
+
+docker run -d \
+-p 8081:8081 \
+-e ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser \
+-e ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass \
+-e ME_CONFIG_MONGODB_SERVER=mongodb \
+--name mongo-express \
+--net mongo-express-network \
+mongo-express
+
+
+docker rm mongodb mongo-express
+docker network rm mongo-express-network
+
+
+Stop the container(s) using the following command: docker-compose down.
+Delete all containers using the following command: docker rm -f $(docker ps -a -q)
+Delete all volumes using the following command: docker volume rm $(docker volume ls -q)
+Restart the containers using the following command:
+
+
+//Run the booking-svc container only
+docker run --name booking-svc -p 8989:3000 -d kt/booking-svc
+
+//Build the image 
+docker build -t kt/booking-svc . 
+
+//Remember to change the image in docker-compose file under image to the tag 
+services:
+  booking-svc:
+    image: kt/booking-svc
+    container_name: booking-svc
+    restart: unless-stopped
+    env_file: .env
+    environment:
+
+//Steps to bring up containers
+docker-compose up --force-recreate -d
+docker-compose down --remove-orphans
+
+mongodb://rootuser:rootpass@0.0.0.0:27017/mongodb?authSource=admin
+
+docker inspect --format '{{.NetworkSettings.Networks.nat.IPAddress}}'
+
+mongo --port 27017 -u "rootuser" -p "rootPass" --authenticationDatabase "admin"
+
+
+
+const {TextDecoder, TextEncoder} = require("util");
