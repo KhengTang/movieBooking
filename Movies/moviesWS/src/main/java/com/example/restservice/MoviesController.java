@@ -5,15 +5,19 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import java.util.ArrayList;
-import java.util.List;
+
+//import org.springframework.web.bind.annotation.CrossOrigin;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.io.OutputStream;
@@ -29,97 +33,59 @@ import com.example.restservice.SearchResultDTO;
 import com.example.restservice.SearchResultListDTO;
 import com.example.restservice.MovieDetailsDTO;
 
+import com.example.restservice.entity.Movie;
+import com.example.restservice.repository.MovieRepository;
+import com.example.restservice.service.MovieService;
+
 @RestController
 public class MoviesController {
 
 	private static final Logger LOGGER=LoggerFactory.getLogger(MoviesController.class);
 
 	private String query_url = "https://www.omdbapi.com/?apikey=40c317d7&";
+	
 	private static final String typeAndTitle = "type=movie&s=";
 	private static final String paramImdbID = "i=";
 	private static final String paramPage = "&page=";
 
-	// SearchResultListDTO obj
-	/*@GetMapping("/searchMovies")
-	public SearchResultListDTO searchResultList(@RequestParam(value = "title") String title) throws IOException {
+	@Autowired
+	private MovieService service;
 
-		//1: create params
-		String searchMovieTitle = typeAndTitle + title;
+	/*
+	*	Database-related
+	*	> CRD operations 
+	*/
 
-		String urlAndParams = query_url + searchMovieTitle;
-		LOGGER.info("urlAndParams: " + urlAndParams);
+	//CREATE
+	@PostMapping("/addMovie")
+	public Movie addMovie(@RequestBody Movie movie) {
+		return service.saveMovie(movie);
+	}
 
-		//2: setup http GET connection
-		URL url = new URL(urlAndParams);
+	//RETRIEVE
+	@GetMapping("/movies")
+	public List<Movie> findAllMovies(){
+		return service.getMovies();
+	}
 
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setDoOutput(true);
+	@GetMapping("/movie/{imdbId}")
+	public Movie findMovieById(@PathVariable String imdbId){
+		return service.getMovie(imdbId);
+	}
 
-		//3: read the response
-		SearchResultListDTO srlDTO = new SearchResultListDTO();
+	//DELETE
+	@DeleteMapping("/removeMovie/{imdbId}")
+	public String removeMovie(@PathVariable String imdbId) {
+		return service.deleteMovie(imdbId);
+	}
+	
 
-		InputStream in = new BufferedInputStream(conn.getInputStream());
-		String result = new Scanner(in, "UTF-8").useDelimiter("\\A").next();
-		LOGGER.info("respondJSONstring: " + result);
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		try {
-			srlDTO = mapper.readValue(result, SearchResultListDTO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// terminate inputstream
-		in.close();
-
-		// terminate the HTTP request
-		conn.disconnect();
-		return srlDTO;
-	}*/
-
-	// SearchResultDTO obj
-	/*@GetMapping("/searchMovies")
-	public List<SearchResultDTO> searchResultList(@RequestParam String title) throws IOException {
-
-		//1: create params
-		String searchMovieTitle = typeAndTitle + title;
-
-		String urlAndParams = query_url + searchMovieTitle;
-		LOGGER.info("urlAndParams: " + urlAndParams);
-
-		//2: setup http GET connection
-		URL url = new URL(urlAndParams);
-
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setDoOutput(true);
-
-		//3: read the response
-		SearchResultListDTO srlDTO = new SearchResultListDTO();
-
-		InputStream in = new BufferedInputStream(conn.getInputStream());
-		String result = new Scanner(in, "UTF-8").useDelimiter("\\A").next();
-		LOGGER.info("respondJSONstring: " + result);
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		try {
-			srlDTO = mapper.readValue(result, SearchResultListDTO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// terminate inputstream
-		in.close();
-
-		// terminate the HTTP request
-		conn.disconnect();
-		return srlDTO.getSearch();
-	}*/
-
-	// movieDetailsDTO obj
+	/*
+	*	omDB-related
+	*	> details of movie (by movie imdbID) 
+	*	> search (by movie title) and view list of movies
+	*/
+	//@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/movieDetails")
 	public MovieDetailsDTO movieDetails(@RequestParam(value = "id") String id) throws IOException {
 
@@ -159,8 +125,8 @@ public class MoviesController {
 		return mdsDTO;
 	}
 
-	// SearchResultListDTO obj w/ Pagination
-	@GetMapping("/searchMoviesPage")
+	//@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/searchMovies")
 	public SearchResultListDTO searchResultListPage(@RequestParam String title, @RequestParam(value = "page", defaultValue = "1") String page) throws IOException {
 
 		//1: create params
