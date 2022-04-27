@@ -40,7 +40,7 @@ jobs:
         uses: einaregilsson/beanstalk-deploy@v13
         with:
           aws_access_key: ${{ secrets.ACC_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_ACC_SECRET_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.ACC_SECRET_ACCESS_KEY }}
           use_existing_version_if_available: false
           application_name: accountService
           environment_name: Accountservice-env
