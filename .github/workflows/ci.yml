@@ -43,4 +43,4 @@ jobs:
             environment_name: Accountservice-env
             version_label: ${{github.SHA}}
             region: ap-southeast-1
-            deployment_package: deploy.zip
+            deployment_package: Account/deploy.zip
