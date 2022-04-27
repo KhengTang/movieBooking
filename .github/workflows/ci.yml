@@ -21,11 +21,11 @@ jobs:
         run: |
             cd ./Account
             mvn package -Dmaven.test.skip
-	  - name: Build Docker Image
+      - name: Build Docker Image
         run: |
             cd ./Account
             docker build -t account -f Dockerfile .
-	  - name: Generate Deployment Package
+      - name: Generate Deployment Package
         run: |
             cd ./Account
             zip -r deploy.zip * 
