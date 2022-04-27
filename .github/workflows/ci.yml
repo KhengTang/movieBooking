@@ -45,5 +45,5 @@ jobs:
           application_name: accountService
           environment_name: Accountservice-env
           version_label: ${{github.SHA}}
-          region: ap-southeast-1a
+          region: ap-southeast-1
           deployment_package: BlockCinemasAccount-0.0.1-SNAPSHOT.jar 
