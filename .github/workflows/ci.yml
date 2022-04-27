@@ -1,46 +1,47 @@
-name: Docker Image CI
 
+name: Deployment
 on:
   push:
-    branches: [ account ]
+    branches:
+      - account
   pull_request:
-    branches: [ account ]
-
+    branches:
+      - account
 jobs:
-
   build:
-
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - 
-      name: Build the Docker image
-      run: docker build -t account -f Dockerfile .
-    -
-      name: Generate Deployment Package
-      run: zip -r deploy.zip *
-    -
-      name: Get timestamp
-      uses: gerred/actions/current-time@master
-      id: current-time
-        
-    - name: Run string replace
-      uses: frabert/replace-string-action@master
-      id: format-time
-      with:
-        pattern: '[:\.]+'
-        string: "${{ steps.current-time.outputs.time }}"
-        replace-with: '-'
-        flags: 'g'
-
-    - name: Deploy to EB
-      uses: einaregilsson/beanstalk-deploy@v14
-      with:
-        aws_access_key: ${{ secrets.ACC_ACCESS_KEY }}
-        aws_secret_key: ${{ secrets.ACC_SECRET_ACCESS_KEY }}
-        application_name: accountService
-        environment_name: Accountservice-env
-        version_label: "account-api-${{ steps.format-time.outputs.replaced }}"
-        region: ap-southeast-1
-        deployment_package: deploy.zip
+      - uses: actions/checkout@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+      - name: Build with Maven
+        run: mvn package -Dmaven.test.skip
+      - name: Upload JAR
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: Account/target/BlockCinemasAccount-0.0.1-SNAPSHOT.jar  
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download JAR
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+      #Deploy the artifact (JAR) into AWS Beanstalk
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v13
+        with:
+          aws_access_key: ${{ secrets.ACC_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_ACC_SECRET_ACCESS_KEY }}
+          use_existing_version_if_available: false
+          application_name: accountService
+          environment_name: Accountservice-env
+          version_label: ${{github.SHA}}
+          region: ap-southeast-1a
+          deployment_package: BlockCinemasAccount-0.0.1-SNAPSHOT.jar 
