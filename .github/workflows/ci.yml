@@ -18,7 +18,9 @@ jobs:
         with:
           java-version: '8'
       - name: Build with Maven
-        run: mvn package -Dmaven.test.skip
+        run: |
+            cd ./java
+            mvn package -Dmaven.test.skip
       - name: Upload JAR
         uses: actions/upload-artifact@v2
         with:
