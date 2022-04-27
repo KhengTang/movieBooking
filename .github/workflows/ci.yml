@@ -37,7 +37,7 @@ jobs:
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v14
         with:
-            aws_access_key: ${{ secrets.ACC_ACCESS_KEY_ID }}
+            aws_access_key: ${{ secrets.ACC_ACCESS_KEY }}
             aws_secret_key: ${{ secrets.ACC_SECRET_ACCESS_KEY }}
             application_name: accountService
             environment_name: Accountservice-env
