@@ -1,8 +1,49 @@
 version: "3"
 
 services:
+  cms-movies-svc:
+    image: aws/movies-svc
+    env_file: ./setting.env
+    container_name: movies-svc
+    ports:
+      - 3000:3000
+    environment: 
+      - DB=cinemas
+      - DB_USER=rootuser
+      - DB_PASS=rootPass
+      - DB_SERVERS=cms-mongodb:27017
+      - DB_AUTH=SCRAM-SHA-1
+      - PORT=3000
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+
+  cms-catalog-svc:
+    image: aws/catalog-svc
+    env_file: ./setting.env
+    container_name: catalog-svc
+    ports:
+      - 3001:3000
+    environment: 
+      - DB=cinemas
+      - DB_USER=rootuser
+      - DB_PASS=rootPass
+      - DB_SERVERS=cms-mongodb:27017
+      - DB_AUTH=SCRAM-SHA-1
+      - PORT=3001
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+
   cms-mongodb:
     image: mongo:4.4
+    env_file: ./setting.env
     container_name: mongodb
     ports:
       - 27017:27017
@@ -17,6 +58,7 @@ services:
 
   mongo-express:
     image: mongo-express
+    env_file: ./setting.env
     container_name: mongo-express
     ports:
       - 8081:8081

@@ -29,21 +29,16 @@ describe("Booking API", () => {
     sendEmail({ container }, payload) {
       return new Promise((resolve, reject) => {
         const { smtpSettings, smtpTransport, nodemailer } = container.cradle;
-
+        console.info(smtpSettings);
         const transporter = nodemailer.createTransport({
           host: smtpSettings.host,
           port: smtpSettings.port,
-          authMethod: smtpSettings.authMethod,
+          ssl: smtpSettings.ssl,
+          tls: smtpSettings.tls,
           auth: {
             user: smtpSettings.user,
             pass: smtpSettings.pass,
           },
-          tls: {
-            rejectUnauthorized: smtpSettings.tls.rejectUnauthorized,
-            ignoreTLS: smtpSettings.tls.ignoreTLS,
-          },
-          logger: true,
-          transactionLog: true,
         });
 
         // const mailOptions = {

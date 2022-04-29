@@ -17,6 +17,7 @@ process.on("uncaughtRejection", (err, promise) => {
 });
 
 mediator.on("db.ready", (db) => {
+  console.log(db);
   let rep;
   repository
     .connect(db)
@@ -25,7 +26,7 @@ mediator.on("db.ready", (db) => {
       rep = repo;
       return server.start({
         port: config.serverSettings.port,
-        ssl: config.serverSettings.ssl,
+        //ssl: config.serverSettings.ssl,
         repo,
       });
     })

@@ -2,14 +2,15 @@
 
 const repository = (connection) => {
   const { db, ObjectID } = connection;
-  const moviesDB = db.db("movies");
+  const cinemaDB = db.db("cinemas");
+  const cinemasCollection = cinemaDB.collection("cinemas");
 
   const getCinemasByCity = (cityId) => {
     return new Promise((resolve, reject) => {
       const cinemas = [];
       const query = { city_id: cityId };
       const projection = { _id: 1, name: 1 };
-      const cursor = moviesDB.collection("cinemas").find(query, projection);
+      const cursor = cinemasCollection.find(query, projection);
       const addCinema = (cinema) => {
         cinemas.push(cinema);
       };
@@ -35,7 +36,7 @@ const repository = (connection) => {
         }
         resolve(cinema);
       };
-      moviesDB.collection("cinemas").findOne(query, projection, response);
+      cinemasCollection.findOne(query, projection, response);
     });
   };
 
@@ -84,14 +85,15 @@ const repository = (connection) => {
       const sendSchedules = (err, result) => {
         if (err) {
           reject(
-            "An error has occured fetching schedules by movie, err: " + err
+            "An error has occurred fetching schedules by movie, err: " + err
           );
         }
         resolve(result);
       };
-      moviesDB
-        .collection("cinemas")
-        .aggregate([match, project, ...unwind, ...group], sendSchedules);
+      cinemasCollection.aggregate(
+        [match, project, ...unwind, ...group],
+        sendSchedules
+      );
     });
   };
 

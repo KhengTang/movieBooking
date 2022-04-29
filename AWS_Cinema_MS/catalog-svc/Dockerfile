@@ -20,6 +20,6 @@ RUN chown -R nupp:nupp $HOME/* /usr/local/ && \
 
 USER nupp
 
-EXPOSE 3002
+EXPOSE 3001
 
 CMD ["dumb-init", "npm", "start"]

@@ -14,7 +14,7 @@ WORKDIR $HOME/app
 
 RUN chown -R nupp:nupp $HOME/* /usr/local/ && \
     chmod +x /usr/local/bin/dumb-init && \
-    npm cache clean && \
+    #npm cache clean && \
     npm install --silent --progress=false --production && \
     chown -R nupp:nupp $HOME/*
 

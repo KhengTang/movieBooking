@@ -3,22 +3,13 @@ const repository = (container) => {
   const sendEmail = (payload) => {
     return new Promise((resolve, reject) => {
       const { smtpSettings, smtpTransport, nodemailer } = container.cradle;
-
       const transporter = nodemailer.createTransport({
         host: smtpSettings.host,
         port: smtpSettings.port,
-        secure: smtpSettings.secure,
-        authMethod: smtpSettings.authMethod,
         auth: {
           user: smtpSettings.user,
           pass: smtpSettings.pass,
         },
-        tls: {
-          rejectUnauthorized: smtpSettings.tls.rejectUnauthorized,
-          ignoreTLS: smtpSettings.tls.ignoreTLS,
-        },
-        logger: true,
-        transactionLog: true,
       });
 
       const mailOptions = {
