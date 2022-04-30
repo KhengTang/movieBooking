@@ -19,13 +19,13 @@ public class UserLoginController {
     @Autowired
     UserLoginService userLoginService;
 
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @GetMapping("")
     public List<UserLogin> list() {
         return userLoginService.listAllUserLogin();
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @GetMapping("/{id}")
     public ResponseEntity<UserLogin> get(@PathVariable String id) {
         try {
@@ -36,13 +36,13 @@ public class UserLoginController {
         }
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PostMapping("/")
     public void add(@RequestBody UserLogin userLogin) {
     	userLoginService.saveUserLogin(userLogin);
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PostMapping("/{id}")
     public ResponseEntity<UserLogin> login(@RequestBody UserLogin userLogin) {
     	try {
@@ -58,7 +58,7 @@ public class UserLoginController {
         }
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody UserLogin userLogin, @PathVariable String id) {
         try {
@@ -71,7 +71,7 @@ public class UserLoginController {
         }
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
 

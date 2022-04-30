@@ -18,19 +18,19 @@ public class UserHistoryController {
     @Autowired
     UserHistoryService userHistoryService;
 
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @GetMapping("")
     public List<UserHistory> list() {
         return userHistoryService.listAllUserHistory();
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @GetMapping("/{id}")
     public List<UserHistory> getUserHistoryByUserId(@PathVariable String id) {
     	return userHistoryService.listAllUserHistoryByUserId(id);
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @GetMapping("/id/{id}")
     public ResponseEntity<UserHistory> get(@PathVariable Long id) {
         try {
@@ -41,13 +41,13 @@ public class UserHistoryController {
         }
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PostMapping("/")
     public void add(@RequestBody UserHistory userHistory) {
     	userHistoryService.saveUserHistory(userHistory);
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody UserHistory userHistory, @PathVariable Long id) {
         try {
@@ -60,7 +60,7 @@ public class UserHistoryController {
         }
     }
     
-    @CrossOrigin
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
 
