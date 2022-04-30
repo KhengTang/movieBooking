@@ -19,11 +19,13 @@ public class UserLoginController {
     @Autowired
     UserLoginService userLoginService;
 
+    @CrossOrigin
     @GetMapping("")
     public List<UserLogin> list() {
         return userLoginService.listAllUserLogin();
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<UserLogin> get(@PathVariable String id) {
         try {
@@ -34,11 +36,13 @@ public class UserLoginController {
         }
     }
     
+    @CrossOrigin
     @PostMapping("/")
     public void add(@RequestBody UserLogin userLogin) {
     	userLoginService.saveUserLogin(userLogin);
     }
     
+    @CrossOrigin
     @PostMapping("/{id}")
     public ResponseEntity<UserLogin> login(@RequestBody UserLogin userLogin) {
     	try {
@@ -54,6 +58,7 @@ public class UserLoginController {
         }
     }
     
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody UserLogin userLogin, @PathVariable String id) {
         try {
@@ -66,6 +71,7 @@ public class UserLoginController {
         }
     }
     
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
 
