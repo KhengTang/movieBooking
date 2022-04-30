@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.BlockCinemasAccount.model.UserLogin;
 import com.example.BlockCinemasAccount.service.UserLoginService;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/login")
 public class UserLoginController {
@@ -19,13 +19,13 @@ public class UserLoginController {
     @Autowired
     UserLoginService userLoginService;
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @GetMapping("")
     public List<UserLogin> list() {
         return userLoginService.listAllUserLogin();
     }
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<UserLogin> get(@PathVariable String id) {
         try {
@@ -36,13 +36,13 @@ public class UserLoginController {
         }
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @PostMapping("/")
     public void add(@RequestBody UserLogin userLogin) {
     	userLoginService.saveUserLogin(userLogin);
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @PostMapping("/{id}")
     public ResponseEntity<UserLogin> login(@RequestBody UserLogin userLogin) {
     	try {
@@ -58,7 +58,7 @@ public class UserLoginController {
         }
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody UserLogin userLogin, @PathVariable String id) {
         try {
@@ -71,7 +71,7 @@ public class UserLoginController {
         }
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
 

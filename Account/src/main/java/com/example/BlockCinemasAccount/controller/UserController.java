@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.BlockCinemasAccount.model.User;
 import com.example.BlockCinemasAccount.service.UserService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -18,13 +19,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @GetMapping("")
     public List<User> list() {
         return userService.listAllUser();
     }
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable String id) {
         try {
@@ -35,13 +36,13 @@ public class UserController {
         }
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @PostMapping("/")
     public void add(@RequestBody User user) {
         userService.saveUser(user);
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody User user, @PathVariable String id) {
         try {
@@ -54,7 +55,7 @@ public class UserController {
         }
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
 

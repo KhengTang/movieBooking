@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.BlockCinemasAccount.model.UserHistory;
 import com.example.BlockCinemasAccount.service.UserHistoryService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/history")
 public class UserHistoryController {
@@ -18,19 +19,19 @@ public class UserHistoryController {
     @Autowired
     UserHistoryService userHistoryService;
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @GetMapping("")
     public List<UserHistory> list() {
         return userHistoryService.listAllUserHistory();
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @GetMapping("/{id}")
     public List<UserHistory> getUserHistoryByUserId(@PathVariable String id) {
     	return userHistoryService.listAllUserHistoryByUserId(id);
     }
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @GetMapping("/id/{id}")
     public ResponseEntity<UserHistory> get(@PathVariable Long id) {
         try {
@@ -41,13 +42,13 @@ public class UserHistoryController {
         }
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @PostMapping("/")
     public void add(@RequestBody UserHistory userHistory) {
     	userHistoryService.saveUserHistory(userHistory);
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody UserHistory userHistory, @PathVariable Long id) {
         try {
@@ -60,7 +61,7 @@ public class UserHistoryController {
         }
     }
     
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
 
