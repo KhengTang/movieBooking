@@ -12,7 +12,7 @@ describe("Payment API", () => {
   let paid = null;
 
   const serverSettings = {
-    port: 3004,
+    port: 3000,
   };
 
   const container = createContainer();
@@ -76,7 +76,8 @@ describe("Payment API", () => {
     container,
   });
 
-  container.registerValue({ repo: testRepo });
+  // container.registerValue({ repo: testRepo });
+  container.register({ testRepo: asValue(testRepo) });
 
   beforeEach(() => {
     return server.start(container).then((serv) => {

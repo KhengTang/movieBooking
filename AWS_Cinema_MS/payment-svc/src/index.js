@@ -5,6 +5,10 @@ const repository = require("./repository/repository");
 const di = require("./config");
 const mediator = new EventEmitter();
 
+// Fix the awilix new version requirement
+const awilix = require("awilix");
+const { asValue } = awilix;
+
 console.log("--- Payment Service ---");
 console.log("Connecting to payment repository...");
 
@@ -21,7 +25,9 @@ mediator.on("di.ready", (container) => {
     .connect(container)
     .then((repo) => {
       console.info("Connected. Starting Server");
-      container.registerValue({ repo });
+      //Old Code
+      //container.registerFunction({repo})
+      container.register({ repo: asValue(repo) });
       return server.start(container);
     })
     .then((app) => {

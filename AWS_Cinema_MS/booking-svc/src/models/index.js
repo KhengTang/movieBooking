@@ -1,4 +1,4 @@
-const joi = require("joi");
+const joi = require("@hapi/joi");
 const user = require("./user.model")(joi);
 const booking = require("./booking.model")(joi);
 const ticket = require("./ticket.model")(joi);

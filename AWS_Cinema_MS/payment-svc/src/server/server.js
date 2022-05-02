@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const bodyparser = require("body-parser");
 const cors = require("cors");
+const spdy = require("spdy");
 const _api = require("../api/payment");
 
 const start = (container) => {
@@ -29,6 +30,8 @@ const start = (container) => {
       res.status(500).send("Something went wrong!");
       next();
     });
+
+    // here is where we register the container as middleware
     app.use((req, res, next) => {
       req.container = container.createScope();
       next();
@@ -37,7 +40,14 @@ const start = (container) => {
     const api = _api.bind(null, { repo });
     api(app);
 
-    const server = app.listen(port, () => resolve(server));
+    if (process.env.NODE === "test") {
+      const server = app.listen(port, () => resolve(server));
+    } else {
+      // const server = spdy
+      //   .createServer(ssl, app)
+      //   .listen(port, () => resolve(server));
+      const server = app.listen(port, () => resolve(server));
+    }
   });
 };
 

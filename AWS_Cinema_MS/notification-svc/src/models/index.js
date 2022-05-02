@@ -1,4 +1,4 @@
-const joi = require("joi");
+const joi = require("@hapi/joi");
 const notification = require("./notification.model")(joi);
 
 const schemas = Object.create({ notification });

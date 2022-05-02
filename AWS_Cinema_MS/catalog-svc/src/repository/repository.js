@@ -82,17 +82,33 @@ const repository = (connection) => {
           },
         },
       ];
-      const sendSchedules = (err, result) => {
-        if (err) {
+
+      // const sendSchedules = (err, result) => {
+      //   if (err) {
+      //     reject(
+      //       "An error has occurred fetching schedules by movie, err: " + err
+      //     );
+      //   }
+      //   resolve(result);
+      // };
+
+      const cursor = cinemasCollection.aggregate([
+        match,
+        project,
+        ...unwind,
+        ...group,
+      ]);
+
+      cursor.forEach(
+        (result) => {
+          console.log(result);
+          resolve(result);
+        },
+        (err) => {
           reject(
-            "An error has occurred fetching schedules by movie, err: " + err
+            `An error has occurred fetching schedules by movie, err: ${err}`
           );
         }
-        resolve(result);
-      };
-      cinemasCollection.aggregate(
-        [match, project, ...unwind, ...group],
-        sendSchedules
       );
     });
   };

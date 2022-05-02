@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { createContainer, asValue } = require("awilix");
 const nodemailer = require("nodemailer");
-const smtpTransport = require("nodemailer-smtp-transport");
+//const smtpTransport = require("nodemailer-smtp-transport");
 const should = require("should");
 const request = require("supertest");
 const server = require("../server/server");
@@ -22,72 +22,99 @@ describe("Booking API", () => {
     serverSettings: asValue(serverSettings),
     smtpSettings: asValue(smtpSettings),
     nodemailer: asValue(nodemailer),
-    smtpTransport: asValue(smtpTransport),
+    //smtpTransport: asValue(smtpTransport),
   });
 
   let _testRepo = {
     sendEmail({ container }, payload) {
       return new Promise((resolve, reject) => {
-        const { smtpSettings, smtpTransport, nodemailer } = container.cradle;
+        //const { smtpSettings, smtpTransport, nodemailer } = container.cradle;
+        const { smtpSettings, nodemailer } = container.cradle;
         console.info(smtpSettings);
-        const transporter = nodemailer.createTransport({
-          host: smtpSettings.host,
-          port: smtpSettings.port,
-          ssl: smtpSettings.ssl,
-          tls: smtpSettings.tls,
+        // let transport = nodemailer.createTransport({
+        //   host: smtpSettings.host,
+        //   port: smtpSettings.port,
+        //   auth: {
+        //     user: smtpSettings.user,
+        //     pass: smtpSettings.pass,
+        //   },
+        // });
+        let transport = nodemailer.createTransport({
+          host: "smtp.mailtrap.io",
+          port: 2525,
           auth: {
-            user: smtpSettings.user,
-            pass: smtpSettings.pass,
+            user: "f6dc085484d5a5",
+            pass: "227a672b1d9407",
           },
         });
-
-        // const mailOptions = {
-        //   from: '"Do Not Reply, Cinemas Company 👥" <no-replay@cinemas.com>',
-        //   to: `${payload.user.email}`,
-        //   subject: `Tickets for movie ${payload.movie.title}`,
-        //   html: `
-        //       <h1>Tickets for ${payload.movie.title}</h1>
-
-        //       <h3>Cinema: <span>${payload.cinema.name}</span> </h3>
-        //       <h4>Room: <span>${payload.cinema.room}</span> </h4>
-        //       <h4>Seat(s): <span>${payload.cinema.seats}</span> </h4>
-
-        //       <h4>description: <span>${payload.description}</span> </h4>
-
-        //       <h4>Total: <span>${payload.totalAmount}</span> </h4>
-        //       <h4>number of order: <span>${payload.orderId}</span> </h4>
-
-        //       <h3>Cinemas Microservice 2017, Enjoy your movie 🍿🎥!</h3>
-        //     `,
-        // };
 
         const mailOptions = {
           from: '"Do Not Reply, Cinemas Company 👥" <no-replay@cinemas.com>',
           to: `${payload.user.email}`,
-          subject: `Tickets for movie `,
+          subject: `Tickets for movie ${payload.movie.title}`,
           html: `
-              <h1>Tickets for </h1>
+              <h1>Tickets for ${payload.movie.title}</h1>
 
-              <h3>Cinema: <span></span> </h3>
-              <h4>Room: <span></span> </h4>
-              <h4>Seat(s): <span></span> </h4>
+              <h3>Cinema: <span>${payload.cinema.name}</span> </h3>
+              <h4>Room: <span>${payload.cinema.room}</span> </h4>
+              <h4>Seat(s): <span>${payload.cinema.seats}</span> </h4>
 
-              <h4>description: <span>$</span> </h4>
+              <h4>description: <span>${payload.description}</span> </h4>
 
-              <h4>Total: <span></span> </h4>
-              <h4>number of order: <span></span> </h4>
+              <h4>Total: <span>${payload.totalAmount}</span> </h4>
+              <h4>number of order: <span>${payload.orderId}</span> </h4>
 
               <h3>Cinemas Microservice 2017, Enjoy your movie 🍿🎥!</h3>
             `,
         };
 
-        transporter.sendMail(mailOptions, (err, info) => {
+        // const mailOptions = {
+        //   from: '"Do Not Reply, Cinemas Company 👥" <no-replay@cinemas.com>',
+        //   // to: `${payload.user.email}`,
+        //   to: `receiver@gmail.com`,
+        //   subject: `Tickets for movie `,
+        //   html: `
+        //       <h1>Tickets for </h1>
+
+        //       <h3>Cinema: <span></span> </h3>
+        //       <h4>Room: <span></span> </h4>
+        //       <h4>Seat(s): <span></span> </h4>
+
+        //       <h4>description: <span>$</span> </h4>
+
+        //       <h4>Total: <span></span> </h4>
+        //       <h4>number of order: <span></span> </h4>
+
+        //       <h3>Cinemas Microservice 2017, Enjoy your movie 🍿🎥!</h3>
+        //     `,
+        // };
+
+        // console.info(
+        //   "notification.spec.js - transport object\n" +
+        //     JSON.stringify(transport.toString())
+        // );
+        // console.info(
+        //   "notification.spec.js - mailOptions object\n" +
+        //     JSON.stringify(mailOptions)
+        // );
+
+        transport.sendMail(mailOptions, (err, info) => {
           if (err) {
             reject(new Error("An error occurred sending an email, err:" + err));
           }
-          transporter.close();
           resolve(info);
+          transport.close();
         });
+
+        // transport.sendMail(mailOptions, function (err, info) {
+        //   if (err) {
+        //     console.log(err);
+        //   } else {
+        //     console.log(info);
+        //     resolve(info);
+        //     transport.close();
+        //   }
+        // });
       });
     },
   };
@@ -96,7 +123,9 @@ describe("Booking API", () => {
 
   testRepo.sendEmail = _testRepo.sendEmail.bind(null, { container });
 
-  container.registerValue({ repo: testRepo });
+  container.register({ repo: asValue(testRepo) });
+
+  //container.registerValue({ repo: testRepo });
 
   beforeEach(() => {
     return server.start(container).then((serv) => {
