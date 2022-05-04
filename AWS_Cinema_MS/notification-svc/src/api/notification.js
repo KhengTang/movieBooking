@@ -4,6 +4,9 @@ const status = require("http-status");
 module.exports = ({ repo }, app) => {
   app.post("/notification/sendEmail", (req, res, next) => {
     const { validate } = req.container.cradle;
+
+    // console.info("notification.js\n");
+    // console.info("repo obj - \n" + JSON.stringify(repo));
     validate(req.body.payload, "notification")
       .then((payload) => {
         return repo.sendEmail(payload);
@@ -11,12 +14,7 @@ module.exports = ({ repo }, app) => {
       .then((ok) => {
         res.status(status.OK).json({ msg: "ok" });
       })
-      .catch((err) => {
-        if (err) {
-          // TODO document why this block is empty
-        }
-        next(err);
-      });
+      .catch(next);
   });
 
   app.post("/notification/sendSMS", (req, res, next) => {

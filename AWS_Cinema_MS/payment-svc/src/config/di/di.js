@@ -1,6 +1,7 @@
 const { createContainer, asValue } = require("awilix");
 const stripe = require("stripe");
 
+// here we include the stripeSettings
 function initDI(
   { serverSettings, dbSettings, database, models, stripeSettings },
   mediator

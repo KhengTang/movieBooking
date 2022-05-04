@@ -4,7 +4,7 @@ RUN addgroup -S nupp && adduser -S -g nupp nupp
 
 ENV HOME=/home/nupp
 
-COPY package.json npm-shrinkwrap.json $HOME/app/
+COPY package.json package-lock.json $HOME/app/
 
 COPY src/ $HOME/app/src
 
@@ -14,12 +14,11 @@ WORKDIR $HOME/app
 
 RUN chown -R nupp:nupp $HOME/* /usr/local/ && \
     chmod +x /usr/local/bin/dumb-init && \
-    npm cache clean && \
     npm install --silent --progress=false --production && \
     chown -R nupp:nupp $HOME/*
 
 USER nupp
 
-EXPOSE 3002
+EXPOSE 3000
 
 CMD ["dumb-init", "npm", "start"]

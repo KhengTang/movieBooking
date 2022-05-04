@@ -9,8 +9,8 @@ const dbSettings = {
 };
 
 const serverSettings = {
-  port: process.env.PORT || 3004,
-  ssl: require("./ssl"),
+  port: process.env.PORT || 3000,
+  //ssl: require("./ssl"),
 };
 
 const stripeSettings = {

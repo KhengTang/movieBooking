@@ -1,13 +1,13 @@
 "use strict";
 
 const repository = (db) => {
-  const moviesDB = db.db("movies");
-  const moviesRepo = moviesDB.collection("movielist2");
+  const cinemaDB = db.db("cinemas");
+  const moviesCollection = cinemaDB.collection("movies");
 
   const getAllMovies = () => {
     return new Promise((resolve, reject) => {
       const movies = [];
-      const cursor = collection.find({}, { title: 1, id: 1 });
+      const cursor = moviesCollection.find({}, { title: 1, id: 1 });
       const addMovie = (movie) => {
         movies.push(movie);
       };
@@ -40,7 +40,7 @@ const repository = (db) => {
           $lte: currentDay.getDate(),
         },
       };
-      const cursor = collection.find(query);
+      const cursor = moviesCollection.find(query);
       const addMovie = (movie) => {
         movies.push(movie);
       };
@@ -69,7 +69,7 @@ const repository = (db) => {
         }
         resolve(movie);
       };
-      collection.findOne({ id: id }, projection, sendMovie);
+      moviesCollection.findOne({ id: id }, projection, sendMovie);
     });
   };
 

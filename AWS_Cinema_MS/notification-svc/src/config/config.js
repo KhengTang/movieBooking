@@ -1,26 +1,24 @@
 const serverSettings = {
-  port: process.env.PORT || 3005,
-  //  ssl: require('./ssl')
+  port: process.env.PORT || 3000,
+  ssl: require("./ssl"),
 };
 
 // as a better practice we can pass this values via env variables
 const smtpSettings = {
-  // service: "Gmail",
-  // user: process.env.EMAIL,
-  // pass: process.env.EMAIL_PASS,
   host: "smtp.mailtrap.io",
   port: 2525,
-  secure: false, // true for 465, false for other ports
-  authMethod: "plain",
   auth: {
-    user: "e9eb8ea13a0cf1", // generated ethereal user
-    pass: "f7ebd0a7c4968b", // generated ethereal password
-  },
-  tls: {
-    // do not fail on invalid certs
-    rejectUnauthorized: false,
-    ignoreTLS: true,
+    user: process.env.EMAIL_USERNAME || "bbce5d94fedce3",
+    pass: process.env.EMAIL_PASSWORD || "61466dd49cd218",
   },
 };
 
-module.exports = Object.assign({}, { serverSettings, smtpSettings });
+const twilioSettings = {
+  accountSid: "AC44009dbccf471adb30a29d87506e8b63",
+  authToken: "2dfc18c3a4e6fc7d4af7a6a4c4ce70af",
+};
+
+module.exports = Object.assign(
+  {},
+  { serverSettings, twilioSettings, smtpSettings }
+);

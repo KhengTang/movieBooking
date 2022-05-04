@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const api = require("../api/catalog");
 
 const start = (options) => {
+  console.log(options);
   return new Promise((resolve, reject) => {
     if (!options.repo) {
       reject(

@@ -1,0 +1,45 @@
+#%RAML 1.0
+title: cinema
+version: v1
+baseUri: /
+
+types:
+  Movie:
+    properties:
+      id: string
+      title: string
+      runtime: number
+      format: string
+      plot: string
+      releaseYear: number
+      releaseMonth: number
+      releaseDay: number
+    example:
+      id: "123"
+      title: "Hans Solo"
+      runtime: 115
+      format: "IMAX"
+      plot: "With the emerging demand of hyperfuel and other resources, Han Solo finds himself in the middle of a heist alongside other criminals, where they meet the likes of Chewbacca and Lando Calrissian in an adventurous situation exposing the criminal underworld."
+      releaseYear : 2017
+      releaseMonth: 1
+      releaseDay: 6
+
+  MoviePremieres:
+    type: Movie []
+
+
+resourceTypes:
+  Collection:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<item>>
+
+/movies:
+  /premieres:
+    type:  { Collection: {item : MoviePremieres } }
+
+  /{id}:
+    type:  { Collection: {item : Movie } }

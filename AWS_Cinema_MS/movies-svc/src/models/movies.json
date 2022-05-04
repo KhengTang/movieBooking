@@ -1,55 +1,62 @@
-[{
+[
+  {
     "id": "1",
     "title": "Hans Solo",
     "runtime": 115,
     "format": "IMAX",
-    "plot": "Lorem ipsum dolor sit amet",
+    "plot": "With the emerging demand of hyperfuel and other resources, Han Solo finds himself in the middle of a heist alongside other criminals, where they meet the likes of Chewbacca and Lando Calrissian in an adventurous situation exposing the criminal underworld.",
     "releaseYear": 2018,
     "releaseMonth": 6,
     "releaseDay": 6
-  }, {
+  },
+  {
     "id": "2",
     "title": "Deadpool 2",
     "runtime": 124,
     "format": "IMAX",
-    "plot": "Lorem ipsum dolor sit amet",
+    "plot": "After losing Vanessa (Morena Baccarin), the love of his life, 4th-wall breaking mercenary Wade Wilson aka Deadpool (Ryan Reynolds) must assemble a team and protect a young, fat mutant Russell Collins aka Firefist (Julian Dennison) from Cable (Josh Brolin), a no-nonsense, dangerous cyborg from the future, and must also learn the most important lesson of all: to be part of a family again.",
     "releaseYear": 2018,
     "releaseMonth": 10,
     "releaseDay": 13
-  }, {
+  },
+  {
     "id": "3",
     "title": "Hotel Transylvannia",
     "runtime": 107,
     "format": "IMAX",
-    "plot": "Lorem ipsum dolor sit amet",
+    "plot": "Count Dracula runs a high-end resort for monsters and is overprotective of his daughter, Mavis. When a human named Johnny enters the hotel, Dracula tries to prevent Mavis from falling for him.",
     "releaseYear": 2017,
     "releaseMonth": 1,
     "releaseDay": 20
-  }, {
+  },
+  {
     "id": "4",
     "title": "Resident Evil",
     "runtime": 107,
     "format": "IMAX",
-    "plot": "Lorem ipsum dolor sit amet",
+    "plot": "A virus turns hundreds of humans and animals at a genetic research facility into flesh-eating zombies. In response, an elite military unit tries to take them down before it is too late.",
     "releaseYear": 2017,
     "releaseMonth": 1,
     "releaseDay": 27
-  }, {
+  },
+  {
     "id": "5",
     "title": "Moanna",
     "runtime": 114,
     "format": "IMAX",
-    "plot": "Lorem ipsum dolor sit amet",
+    "plot": "Moana, daughter of chief Tui, embarks on a journey to return the heart of goddess Te Fitti from Maui, a demigod, after the plants and the fish on her island start dying due to a blight.",
     "releaseYear": 2016,
     "releaseMonth": 12,
     "releaseDay": 2
-  }, {
+  },
+  {
     "id": "6",
     "title": "Jurassic World",
     "runtime": 114,
     "format": "IMAX",
-    "plot": "Lorem ipsum dolor sit amet",
+    "plot": "A theme park showcasing genetically-engineered dinosaurs turns into a nightmare for its tourists when one of the dinosaurs escapes its enclosure. An ex-military animal expert steps up to save the day.",
     "releaseYear": 2016,
     "releaseMonth": 12,
     "releaseDay": 2
-  }]
+  }
+]

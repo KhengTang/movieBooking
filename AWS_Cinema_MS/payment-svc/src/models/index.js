@@ -1,4 +1,4 @@
-const joi = require("joi");
+const joi = require("@hapi/joi");
 const payment = require("./payment.model")(joi);
 
 const schemas = Object.create({ payment });

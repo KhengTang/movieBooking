@@ -1,8 +1,135 @@
 version: "3"
 
 services:
+  cms-api-gateway-svc:
+    image: aws/api-gateway-svc
+    container_name: api-gateway-svc
+    ports:
+      - 8080:8080
+    environment: 
+      - DOCKER_HOST=host.docker.internal:2375
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+    labels:
+      - "apiRoute=/"
+
+  cms-notification-svc:
+    image: aws/notification-svc
+    env_file: ./setting.env
+    container_name: notification-svc
+    ports:
+      - 3005:3000
+    environment: 
+      - DB=cinemas
+      - DB_USER=rootuser
+      - DB_PASS=rootPass
+      - DB_SERVERS=cms-mongodb:27017
+      - DB_AUTH=SCRAM-SHA-1
+      - PORT=3000
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+    labels:
+      - "apiRoute=/notification"
+
+  cms-payment-svc:
+    image: aws/payment-svc
+    env_file: ./setting.env
+    container_name: payment-svc
+    ports:
+      - 3004:3000
+    environment: 
+      - DB=cinemas
+      - DB_USER=rootuser
+      - DB_PASS=rootPass
+      - DB_SERVERS=cms-mongodb:27017
+      - DB_AUTH=SCRAM-SHA-1
+      - PORT=3000
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+    labels:
+      - "apiRoute=/payment"
+
+  cms-booking-svc:
+    image: aws/booking-svc
+    env_file: ./setting.env
+    container_name: booking-svc
+    ports:
+      - 3003:3000
+    environment: 
+      - DB=cinemas
+      - DB_USER=rootuser
+      - DB_PASS=rootPass
+      - DB_SERVERS=cms-mongodb:27017
+      - DB_AUTH=SCRAM-SHA-1
+      - PORT=3000
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+    labels:
+      - "apiRoute=/booking"
+
+  cms-catalog-svc:
+    image: aws/catalog-svc
+    env_file: ./setting.env
+    container_name: catalog-svc
+    ports:
+      - 3002:3000
+    environment: 
+      - DB=cinemas
+      - DB_USER=rootuser
+      - DB_PASS=rootPass
+      - DB_SERVERS=cms-mongodb:27017
+      - DB_AUTH=SCRAM-SHA-1
+      - PORT=3000
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+    labels:
+      - "apiRoute=/cinemas"
+  cms-movies-svc:
+    image: aws/movies-svc
+    env_file: ./setting.env
+    container_name: movies-svc
+    ports:
+      - 3001:3000
+    environment: 
+      - DB=cinemas
+      - DB_USER=rootuser
+      - DB_PASS=rootPass
+      - DB_SERVERS=cms-mongodb:27017
+      - DB_AUTH=SCRAM-SHA-1
+      - PORT=3000
+    depends_on:
+      - cms-mongodb
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+    labels:
+      - "apiRoute=/movies"
+
+
   cms-mongodb:
     image: mongo:4.4
+    env_file: ./setting.env
     container_name: mongodb
     ports:
       - 27017:27017
@@ -14,9 +141,11 @@ services:
     networks:
       - cms-app-network
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
-
+    labels:
+      - "apiRoute=/"
   mongo-express:
     image: mongo-express
+    env_file: ./setting.env
     container_name: mongo-express
     ports:
       - 8081:8081
@@ -29,7 +158,8 @@ services:
       - cms-mongodb
     networks:
       - cms-app-network
-
+    labels:
+      - "apiRoute=/"
 networks:
   cms-app-network:
     driver: bridge

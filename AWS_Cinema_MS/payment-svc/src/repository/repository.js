@@ -1,18 +1,20 @@
 "use strict";
 const repository = (container) => {
   const { database: db } = container.cradle;
-  const moviesDB = db.db("movies");
+  const cinemaDB = db.db("cinemas");
+  const paymentCollection = cinemaDB.collection("payments");
 
   const makePurchase = (payment) => {
     return new Promise((resolve, reject) => {
       const { stripe } = container.cradle;
+      //Charges has been updated to the latest api requirement
       let chargeObj = {
         metadata: {
           name: payment.metadata.name,
         },
         currency: payment.currency,
-        source: payment.currency,
         amount: Math.ceil(payment.amount * 100),
+        source: payment.currency,
         description: payment.description,
       };
       console.log("chargeObj", chargeObj);
@@ -35,11 +37,14 @@ const repository = (container) => {
     });
   };
 
+  // this the function that our API calls first
   const registerPurchase = (payment) => {
     return new Promise((resolve, reject) => {
+      // and here we call the function to execute stripe
       makePurchase(payment)
         .then((paid) => {
-          moviesDB.collection("payments").insertOne(paid, (err, result) => {
+          // if every thing is successfully, we make the registry at our db, for the record only
+          paymentCollection.insertOne(paid, (err, result) => {
             if (err) {
               reject(
                 new Error(
@@ -70,8 +75,7 @@ const repository = (container) => {
       } catch (e) {
         console.log("Error parsing json");
       }
-      moviesDB
-        .collection("payments")
+      paymentCollection
         .find({ "charge.id": parsedPayment }, { limit: 10 })
         .toArray(response);
     });

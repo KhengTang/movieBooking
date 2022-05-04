@@ -3,22 +3,13 @@ const repository = (container) => {
   const sendEmail = (payload) => {
     return new Promise((resolve, reject) => {
       const { smtpSettings, smtpTransport, nodemailer } = container.cradle;
-
       const transporter = nodemailer.createTransport({
         host: smtpSettings.host,
         port: smtpSettings.port,
-        secure: smtpSettings.secure,
-        authMethod: smtpSettings.authMethod,
         auth: {
           user: smtpSettings.user,
           pass: smtpSettings.pass,
         },
-        tls: {
-          rejectUnauthorized: smtpSettings.tls.rejectUnauthorized,
-          ignoreTLS: smtpSettings.tls.ignoreTLS,
-        },
-        logger: true,
-        transactionLog: true,
       });
 
       const mailOptions = {
@@ -52,7 +43,33 @@ const repository = (container) => {
   };
 
   const sendSMS = (payload) => {
-    // TODO: code for some sms service
+    return new Promise((resolve, reject) => {
+      const { twilioSettings, twilio } = container.cradle;
+
+      let transport = twilio.messages
+        .create(
+          {
+            body: `Tickets for ${payload.movie.title}, 
+            Cinema@${payload.cinema.name}, 
+            Room:${payload.cinema.name} & 
+            Seats @${payload.cinema.seats}
+            Thank You`,
+            from: "+13253356157",
+            to: "+6597913593",
+          },
+          (err, result) => {
+            if (err && err.type === "TwilioSMSError") {
+              reject(
+                new Error("An error occurred processing sms, err: " + err)
+              );
+            } else {
+              const temp_result = Object.assign({}, { result });
+              resolve(temp_result);
+            }
+          }
+        )
+        .then((message) => console.log(message.sid));
+    });
   };
 
   return Object.create({

@@ -10,7 +10,7 @@ describe("Booking API", () => {
   let app = null;
 
   const serverSettings = {
-    port: 3003,
+    port: 3000,
   };
 
   let testRepo = {
@@ -59,38 +59,42 @@ describe("Booking API", () => {
 
   it("can make a booking and return the ticket(s)", (done) => {
     const now = new Date();
-    now.setDate(now.getDate() + 1);
+    //now.setDate(now.getDate() + 1);
 
     const user = {
-      name: "The",
-      lastName: "Rock",
-      email: "therock@wwf.com",
-      creditCard: {
-        number: "1111222233334444",
-        cvc: "123",
-        exp_month: "07",
-        exp_year: "2017",
-      },
-      membership: "7777888899990000",
+      name: "Brian ",
+      lastName: "Khiatani",
+      email: "briankhi3@gmail.com",
+      membership: "4534542086103735",
     };
 
     const booking = {
-      city: "Boston",
-      cinema: "AMC Natick Plaza",
+      city: "Jurong East",
+      cinema: "Block Cinema Jurong East",
       movie: "Hans Solo",
-      schedule: now.toString(),
+      schedule: now.toISOString().replace(/T/, " ").replace(/\..+/, ""),
       cinemaRoom: 7,
       seats: ["45"],
       totalAmount: 71,
     };
 
+    console.info(
+      "booking.spec.js - pre call : \nBooing Info - " +
+        JSON.stringify(booking) +
+        " \nUser Info - " +
+        JSON.stringify(user) +
+        " \n"
+    );
     request(app)
       .post("/booking")
       .send({ user, booking })
       .expect((res) => {
+        console.info(
+          "booking.spec.js - res result : " + JSON.stringify(res.body)
+        );
         res.body.should.containEql({
           cinema: booking.cinema,
-          schedule: now.toString(),
+          schedule: now.toISOString().replace(/T/, " ").replace(/\..+/, ""),
           movie: booking.movie,
           seats: booking.seats,
           cinemaRoom: booking.cinemaRoom,
