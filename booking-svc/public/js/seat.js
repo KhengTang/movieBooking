@@ -47,9 +47,9 @@ confirmBtn.addEventListener('click', async (e) => {
         var movieName = titleMovie.innerText;
         e.preventDefault();
         let result = await fetch(
-            'http://localhost:5000/bookings', {
+            'http://localhost:8080/booking', {
                 method: "put",
-                body: JSON.stringify({ theaterName, movieName, seatsIndex }),
+                body: JSON.stringify({"user":{"name":"Cristian","lastName":"Ramirez","email":"cristiano@nupp.com","creditCard":{"number":"1111222233334444","cvc":"123","exp_month":"07","exp_year":"2017"},"membership":"7777888899990000"},"booking":{"city":"Morelia","cinema":"Plaza Morelia","movie":"Assassins Creed","schedule":"2022-05-02 12:17:32","cinemaRoom":6,"seats":["30"],"totalAmount":71}}),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -57,7 +57,8 @@ confirmBtn.addEventListener('click', async (e) => {
             result = await result.json();
             console.warn(result);
             if (result) {
-                alert("Data saved successfully");
+                //TODO: add in booking id into alert
+                alert("Booking made successfully! Your booking ID is: ");
             }
         console.log("Go to payment page.")
     }
