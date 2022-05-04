@@ -34,13 +34,7 @@ const userSchema = (joi) => ({
   phoneNumber: joi
     .string()
     .regex(/^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/),
-  creditCard: joi.object().keys({
-    number: joi.string().creditCard().required(),
-    cvc: joi.number(),
-    exp_month: joi.number(),
-    exp_year: joi.number(),
-  }),
-  membership: joi.string().creditCard(),
+  membership: joi.string(),
 });
 
 module.exports = userSchema;

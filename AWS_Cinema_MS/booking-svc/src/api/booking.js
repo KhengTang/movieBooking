@@ -20,13 +20,12 @@ module.exports = ({ repo }, app) => {
     ])
       .then(([user, booking]) => {
         const payment = {
-          userName: user.name + " " + user.lastName,
-          currency: "mxn",
-          number: user.creditCard.number,
-          cvc: user.creditCard.cvc,
-          exp_month: user.creditCard.exp_month,
-          exp_year: user.creditCard.exp_year,
+          metadata: {
+            name: user.name + " " + user.lastName,
+          },
+          currency: "sgd",
           amount: booking.totalAmount,
+          source: Math.random() < 0.5 ? "tok_visa" : "tok_mastercard",
           description: `
           Ticket(s) for movie ${booking.movie},
           with seat(s) ${booking.seats.toString()}

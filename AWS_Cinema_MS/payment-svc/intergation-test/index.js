@@ -4,15 +4,15 @@ const supertest = require("supertest");
 describe("Payment Service", () => {
   const api = supertest("http://localhost:3003");
   const testPayment = {
-    userName: "Cristian Ramirez",
-    currency: "mxn",
+    userName: "Brian Khiatani",
+    currency: "sgd",
     number: "4242424242424242",
     cvc: "123",
     exp_month: "12",
     exp_year: "2017",
     amount: 71,
     description: `
-      Ticket(s) for movie "Assassins Creed",
+      Ticket(s) for movie "Hans Solo",
       with seat(s) 47, 48
       at time 8 / feb / 17`,
     d,

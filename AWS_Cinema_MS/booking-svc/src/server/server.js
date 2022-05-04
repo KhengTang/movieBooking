@@ -52,6 +52,7 @@ const start = (container) => {
     if (process.env.NODE === "test") {
       const server = app.listen(port, () => resolve(server));
     } else {
+      // default to no use ssl
       // const server = spdy
       //   .createServer(ssl, app)
       //   .listen(port, () => resolve(server));

@@ -77,7 +77,7 @@ describe("Payment API", () => {
   });
 
   // container.registerValue({ repo: testRepo });
-  container.register({ testRepo: asValue(testRepo) });
+  container.register({ repo: asValue(testRepo) });
 
   beforeEach(() => {
     return server.start(container).then((serv) => {
@@ -99,7 +99,7 @@ describe("Payment API", () => {
       amount: 1,
       source: "tok_visa",
       description: `
-        Ticket(s) for movie "Assassins Creed",
+        Ticket(s) for movie "Hans Solo",
         with seat(s) 47, 48
         at time 8 / feb / 17`,
     };
@@ -109,14 +109,16 @@ describe("Payment API", () => {
       .send({ paymentOrder: testPayment })
       .expect((res) => {
         should.ok(res.body.paid);
+        console.log(JSON.stringify(res.body));
         paid = res.body.paid;
+        //receipt_url
       })
       .expect(200, done);
   });
 
   it("can get purchase", (done) => {
     request(app)
-      .get("/payment/getPurchaseById/" + paid.charge.id)
+      .post("/payment/getPurchaseById/" + paid.charge.id)
       .expect((res) => {
         should.ok(res.body.payment);
         should.equal(res.body.payment.amount, 1 * 100);

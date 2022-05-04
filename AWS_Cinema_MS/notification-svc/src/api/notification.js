@@ -17,16 +17,16 @@ module.exports = ({ repo }, app) => {
       .catch(next);
   });
 
-  // app.post("/notification/sendSMS", (req, res, next) => {
-  //   const { validate } = req.container.cradle;
+  app.post("/notification/sendSMS", (req, res, next) => {
+    const { validate } = req.container.cradle;
 
-  //   validate(req.body.payload, "notification")
-  //     .then((payload) => {
-  //       return repo.sendSMS(payload);
-  //     })
-  //     .then((ok) => {
-  //       res.status(status.OK).json({ msg: "ok" });
-  //     })
-  //     .catch(next);
-  // });
+    validate(req.body.payload, "notification")
+      .then((payload) => {
+        return repo.sendSMS(payload);
+      })
+      .then((ok) => {
+        res.status(status.OK).json({ msg: "ok" });
+      })
+      .catch(next);
+  });
 };

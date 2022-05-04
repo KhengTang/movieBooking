@@ -6,28 +6,28 @@ describe("Movies API", () => {
   let app = null;
   let testMovies = [
     {
-      id: "3",
-      title: "xXx: Reactivado",
+      id: "1",
+      title: "Hans Solo",
       format: "IMAX",
-      releaseYear: 2017,
-      releaseMonth: 1,
-      releaseDay: 20,
+      releaseYear: 2018,
+      releaseMonth: 6,
+      releaseDay: 6,
     },
     {
-      id: "4",
-      title: "Resident Evil: Capitulo Final",
+      id: "2",
+      title: "Deadpool 2",
+      format: "IMAX",
+      releaseYear: 2018,
+      releaseMonth: 10,
+      releaseDay: 13,
+    },
+    {
+      id: "3",
+      title: "Hotel Transylvannia",
       format: "IMAX",
       releaseYear: 2017,
       releaseMonth: 1,
       releaseDay: 27,
-    },
-    {
-      id: "1",
-      title: "Assasins Creed",
-      format: "IMAX",
-      releaseYear: 2017,
-      releaseMonth: 1,
-      releaseDay: 6,
     },
   ];
 
@@ -67,10 +67,10 @@ describe("Movies API", () => {
       .expect((res) => {
         res.body.should.containEql({
           id: "1",
-          title: "Assasins Creed",
+          title: "Hans Solo",
           format: "IMAX",
-          releaseYear: 2017,
-          releaseMonth: 1,
+          releaseYear: 2018,
+          releaseMonth: 6,
           releaseDay: 6,
         });
       })
@@ -82,12 +82,12 @@ describe("Movies API", () => {
       .get("/movies/premieres")
       .expect((res) => {
         res.body.should.containEql({
-          id: "1",
-          title: "Assasins Creed",
+          id: "3",
+          title: "Hotel Transylvannia",
           format: "IMAX",
           releaseYear: 2017,
           releaseMonth: 1,
-          releaseDay: 6,
+          releaseDay: 27,
         });
       })
       .expect(200, done);
@@ -99,10 +99,10 @@ describe("Movies API", () => {
       .expect((res) => {
         res.body.should.containEql({
           id: "1",
-          title: "Assasins Creed",
+          title: "Hans Solo",
           format: "IMAX",
-          releaseYear: 2017,
-          releaseMonth: 1,
+          releaseYear: 2018,
+          releaseMonth: 6,
           releaseDay: 6,
         });
       })

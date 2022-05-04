@@ -13,4 +13,12 @@ const smtpSettings = {
   },
 };
 
-module.exports = Object.assign({}, { serverSettings, smtpSettings });
+const twilioSettings = {
+  accountSid: "AC44009dbccf471adb30a29d87506e8b63",
+  authToken: "2dfc18c3a4e6fc7d4af7a6a4c4ce70af",
+};
+
+module.exports = Object.assign(
+  {},
+  { serverSettings, twilioSettings, smtpSettings }
+);

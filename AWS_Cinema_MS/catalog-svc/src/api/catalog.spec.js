@@ -7,37 +7,37 @@ describe("Movies API", () => {
   const testCinemasCity = [
     {
       _id: "588ac3a02d029a6d15d0b5c4",
-      name: "Plaza Morelia",
+      name: "Block Cinema Jurong East",
     },
     {
       _id: "588ac3a02d029a6d15d0b5c5",
-      name: "Las Americas",
+      name: "Block Cinema Jurong Point",
     },
   ];
 
   const testCinemaId = {
     _id: "588ac3a02d029a6d15d0b5c4",
-    name: "Plaza Morelia",
+    name: "Block Cinema Jurong East",
     cinemaPremieres: [
       {
         id: "1",
-        title: "Assasins Creed",
+        title: "Hans Solo",
         runtime: 115,
-        plot: "Lorem ipsum dolor sit amet",
+        plot: "With the emerging demand of hyperfuel and other resources, Han Solo finds himself in the middle of a heist alongside other criminals, where they meet the likes of Chewbacca and Lando Calrissian in an adventurous situation exposing the criminal underworld.",
         poster: "link to poster...",
       },
       {
         id: "2",
-        title: "Aliados",
+        title: "Deadpool 2",
         runtime: 124,
-        plot: "Lorem ipsum dolor sit amet",
+        plot: "After losing Vanessa (Morena Baccarin), the love of his life, 4th-wall breaking mercenary Wade Wilson aka Deadpool (Ryan Reynolds) must assemble a team and protect a young, fat mutant Russell Collins aka Firefist (Julian Dennison) from Cable (Josh Brolin), a no-nonsense, dangerous cyborg from the future, and must also learn the most important lesson of all: to be part of a family again.",
         poster: "link to poster...",
       },
       {
         id: "3",
-        title: "xXx: Reactivado",
+        title: "Hotel Transylvannia",
         runtime: 107,
-        plot: "Lorem ipsum dolor sit amet",
+        plot: "Count Dracula runs a high-end resort for monsters and is overprotective of his daughter, Mavis. When a human named Johnny enters the hotel, Dracula tries to prevent Mavis from falling for him.",
         poster: "link to poster...",
       },
     ],
@@ -45,7 +45,7 @@ describe("Movies API", () => {
 
   const testSchedulesMovie = [
     {
-      _id: "Plaza Morelia",
+      _id: "Block Cinema Jurong East",
       schedules: [
         {
           room: 2.0,

@@ -75,6 +75,7 @@ const repository = (container) => {
       //     console.log("booking-service,received paid", paid);
       //     console.log("booking-service,received booking", booking);
       const payload = Object.assign({}, { booking, orderId: paid._id });
+      // const payload = Object.assign({}, {booking, orderId: paid.charge.id, description: paid.description})
       ticketsCollection.insertOne(payload, (err, ticket) => {
         if (err) {
           reject(

@@ -6,11 +6,11 @@
     |                         |                          |
     |                         | (loyal vistor)           |
     |                         v                          v
-  Joe --(common user)--> Movie Name <--(displayed)-- Plaza Morelia
+  Joe --(common user)--> Movie Name <--(displayed)-- Block Cinema Jurong East
                              |                           |
                              |  (format)                 | (city)
                              v                           v
-                            4DX                       Morelia
+                            4DX                       Jurong
 
       city
         |

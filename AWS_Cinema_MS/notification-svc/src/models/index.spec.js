@@ -11,20 +11,20 @@ describe("Schemas Validation", () => {
       userType: "loyal",
       totalAmount: 71,
       cinema: {
-        name: "Plaza Morelia",
+        name: "Block Cinema Jurong East",
         room: "1",
         seats: "53, 54",
       },
       movie: {
-        title: "Assassins Creed",
+        title: "Hans Solo",
         format: "IMAX",
         schedule: new Date(),
       },
       orderId: "1aa90cx",
       description: "some description",
       user: {
-        name: "The Rock",
-        email: "therock@wwf.com",
+        name: "Brian Khiatani",
+        email: "briankhi3@gmail.com",
       },
     };
 

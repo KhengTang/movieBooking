@@ -6,23 +6,23 @@ describe("Booking Service", () => {
   const now = new Date();
   now.setDate(now.getDate() + 1);
   const user = {
-    name: "Cristian",
-    lastName: "Ramirez",
-    email: "cristiano@gmail.com",
+    name: "Brian ",
+    lastName: "Khiatani",
+    email: "briankhi3@gmail.com",
     creditCard: {
       number: "4242424242424242",
       cvc: "123",
       exp_month: "12",
       exp_year: "2017",
     },
-    membership: "7777888899990000",
+    membership: "4534542086103735",
   };
 
   const booking = {
-    city: "Morelia",
-    cinema: "Plaza Morelia",
+    city: "Jurong East",
+    cinema: "Block Cinema Jurong East",
     movie: {
-      title: "Assassins Creed",
+      title: "Hans Solo",
       format: "IMAX",
     },
     schedule: now.toString(),

@@ -62,22 +62,16 @@ describe("Booking API", () => {
     //now.setDate(now.getDate() + 1);
 
     const user = {
-      name: "Cristian",
-      lastName: "Ramirez",
-      email: "cristiano@nupp.com",
-      creditCard: {
-        number: "1111222233334444",
-        cvc: "123",
-        exp_month: "07",
-        exp_year: "2017",
-      },
-      membership: "7777888899990000",
+      name: "Brian ",
+      lastName: "Khiatani",
+      email: "briankhi3@gmail.com",
+      membership: "4534542086103735",
     };
 
     const booking = {
-      city: "Morelia",
-      cinema: "Plaza Morelia",
-      movie: "Assassins Creed",
+      city: "Jurong East",
+      cinema: "Block Cinema Jurong East",
+      movie: "Hans Solo",
       schedule: now.toISOString().replace(/T/, " ").replace(/\..+/, ""),
       cinemaRoom: 7,
       seats: ["45"],

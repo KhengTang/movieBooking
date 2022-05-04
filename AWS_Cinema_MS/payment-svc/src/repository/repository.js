@@ -1,7 +1,6 @@
 "use strict";
 const repository = (container) => {
   const { database: db } = container.cradle;
-  const moviesDB = db.db("movies");
   const cinemaDB = db.db("cinemas");
   const paymentCollection = cinemaDB.collection("payments");
 
@@ -14,8 +13,8 @@ const repository = (container) => {
           name: payment.metadata.name,
         },
         currency: payment.currency,
-        source: payment.currency,
         amount: Math.ceil(payment.amount * 100),
+        source: payment.currency,
         description: payment.description,
       };
       console.log("chargeObj", chargeObj);

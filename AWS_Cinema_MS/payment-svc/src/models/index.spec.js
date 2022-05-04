@@ -14,7 +14,7 @@ describe("Schemas Validation", () => {
       amount: 1,
       source: "tok_visa",
       description: `
-        Ticket(s) for movie "Assassins Creed",
+        Ticket(s) for movie "Hans Solo",
         with seat(s) 47, 48
         at time 8 / feb / 17`,
     };

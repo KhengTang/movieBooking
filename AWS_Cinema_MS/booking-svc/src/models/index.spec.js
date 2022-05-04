@@ -10,9 +10,9 @@ describe("Schemas Validation", () => {
     //now.setDate(now.getDate() + 1);
 
     const testBooking = {
-      city: "Morelia",
-      cinema: "Plaza Morelia",
-      movie: "Assassins Creed",
+      city: "Jurong East",
+      cinema: "Block Cinema Jurong East",
+      movie: "Hans Solo",
       schedule: now.toISOString().replace(/T/, " ").replace(/\..+/, ""),
       cinemaRoom: 7,
       seats: ["45"],
@@ -35,7 +35,7 @@ describe("Schemas Validation", () => {
     // const testUser = {
     //   name: "The",
     //   lastName: "Rock",
-    //   email: "therock@wwf.com",
+    //   email: "briankhi3@gmail.com",
     //   creditCard: {
     //     number: "1111222233334444",
     //     cvc: "123",
@@ -45,16 +45,10 @@ describe("Schemas Validation", () => {
     //   membership: "7777888899990000",
     // };
     const testUser = {
-      name: "Cristian",
-      lastName: "Ramirez",
-      email: "cristiano@nupp.com",
-      creditCard: {
-        number: "1111222233334444",
-        cvc: "123",
-        exp_month: "07",
-        exp_year: "2017",
-      },
-      membership: "7777888899990000",
+      name: "Brian ",
+      lastName: "Khiatani",
+      email: "briankhi3@gmail.com",
+      membership: "4534542086103735",
     };
 
     validate(testUser, "user")
@@ -81,9 +75,9 @@ describe("Schemas Validation", () => {
     // };
 
     const testTicket = {
-      cinema: "Plaza Morelia",
+      cinema: "Block Cinema Jurong East",
       schedule: now.toISOString().replace(/T/, " ").replace(/\..+/, ""),
-      movie: "Assassins Creed",
+      movie: "Hans Solo",
       seats: ["35"],
       cinemaRoom: 1,
       orderId: "34jh1231ll",
