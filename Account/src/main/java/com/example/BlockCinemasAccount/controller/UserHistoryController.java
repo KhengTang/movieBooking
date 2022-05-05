@@ -20,7 +20,7 @@ public class UserHistoryController {
     UserHistoryService userHistoryService;
 
     @CrossOrigin
-    @GetMapping("/test")
+    @GetMapping("/test123")
     public List<UserHistory> list() {
         return userHistoryService.listAllUserHistory();
     }
