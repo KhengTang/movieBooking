@@ -14,7 +14,7 @@ const repository = (container) => {
         },
         currency: payment.currency,
         amount: Math.ceil(payment.amount * 100),
-        source: payment.currency,
+        source: Math.random() < 0.5 ? "tok_visa" : "tok_mastercard",
         description: payment.description,
       };
       console.log("chargeObj", chargeObj);

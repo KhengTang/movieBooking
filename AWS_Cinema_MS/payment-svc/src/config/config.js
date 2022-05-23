@@ -16,8 +16,7 @@ const serverSettings = {
 const stripeSettings = {
   secret:
     "sk_test_51KrdBUJH6s0YhjdSXpAnnUvzbtCagQU4JZaAD96gADJYWdQmkeUIG0ZA3XwI96ClpTy3fLpW6jCWd7cDXxvVAapN00xWboN0Sj",
-  public:
-    "pk_test_51KrdBUJH6s0YhjdS3GeUo55Vk9NcFJHPsad5HzmOvz3z0DnwQCxcaOVvcoFMmjkpOCvt4Oj0eAWeDCNjowEE3SDu00CJfpvo8F",
+  public: "1234512345",
 };
 
 module.exports = Object.assign(

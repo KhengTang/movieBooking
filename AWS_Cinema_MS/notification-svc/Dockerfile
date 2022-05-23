@@ -22,4 +22,4 @@ USER nupp
 
 EXPOSE 3000
 
-# CMD ["dumb-init", "npm", "start"]
+CMD ["dumb-init", "npm", "start"]

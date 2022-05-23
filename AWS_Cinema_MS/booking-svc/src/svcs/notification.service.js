@@ -1,15 +1,22 @@
 const supertest = require("supertest");
 
-const urlInDev = "localhost:3004";
+const urlInDev = "host.docker.internal:3005";
 const urlInProduction = "localhost:8080";
 
-module.exports = (payload, headers) => {
+module.exports = (payload) => {
+  console.info(
+    "notification.service.js emailPayload - " + JSON.stringify(payload) + "\n\n"
+  );
   return new Promise((resolve, reject) => {
-    supertest(urlInProduction)
+    supertest(urlInDev)
       .post("/notification/sendEmail")
       .send({ payload })
-      .set(headers)
       .end((err, res) => {
+        console.info(
+          "notification.service.js emailPayload - " +
+            JSON.stringify(payload) +
+            "\n\n"
+        );
         if (err) {
           reject(
             new Error("An error occurred with the payment service, err: " + err)
@@ -18,10 +25,15 @@ module.exports = (payload, headers) => {
         resolve(res.body);
       });
   }).then(() => {
-    supertest(urlInProduction)
+    supertest(urlInDev)
       .post("/notification/sendSMS")
       .send({ payload })
       .end((err, res) => {
+        console.info(
+          "notification.service.js smsPayload - " +
+            JSON.stringify(payload) +
+            "\n\n"
+        );
         if (err) {
           reject(
             new Error("An error occurred with the payment service, err: " + err)

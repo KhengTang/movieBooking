@@ -14,6 +14,7 @@ const notificationSchema = (joi) => ({
   }),
   orderId: joi.string(),
   _id: joi.string(),
+  orderReceipt: joi.string(),
   description: joi.string(),
   user: joi.object().keys({
     name: joi.string(),

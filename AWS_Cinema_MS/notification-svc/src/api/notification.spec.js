@@ -2,7 +2,6 @@
 const { createContainer, asValue } = require("awilix");
 const nodemailer = require("nodemailer");
 const twilio = require("twilio");
-//const smtpTransport = require("nodemailer-smtp-transport");
 const should = require("should");
 const request = require("supertest");
 const server = require("../server/server");
@@ -27,7 +26,6 @@ describe("Booking API", () => {
     twilio: asValue(
       twilio(twilioSettings.accountSid, twilioSettings.authToken)
     ),
-    //smtpTransport: asValue(smtpTransport),
   });
 
   let _testRepo = {
@@ -88,7 +86,7 @@ describe("Booking API", () => {
     },
     sendSMS({ container }, payload) {
       return new Promise((resolve, reject) => {
-        const { twilioSettings, twilio } = container.cradle;
+        const { twilio } = container.cradle;
 
         let transport = twilio.messages
           .create(
@@ -155,11 +153,16 @@ describe("Booking API", () => {
       },
       orderId: "1aa90cx",
       description: "some description",
+      orderReceipt: "www.google.com.sg",
       user: {
         name: "Brian Khiatani",
         email: "briankhi3@gmail.com",
       },
     };
+
+    // console.info(
+    //   "notification.spec.js - payload info - " + JSON.stringify(payload)
+    // );
 
     request(app)
       .post("/notification/sendEmail")

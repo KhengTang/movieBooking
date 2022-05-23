@@ -1,14 +1,14 @@
-"use strict";
+("use strict");
 const repository = (container) => {
   const sendEmail = (payload) => {
     return new Promise((resolve, reject) => {
-      const { smtpSettings, smtpTransport, nodemailer } = container.cradle;
+      const { smtpSettings, nodemailer } = container.cradle;
       const transporter = nodemailer.createTransport({
-        host: smtpSettings.host,
-        port: smtpSettings.port,
+        host: "smtp.mailtrap.io",
+        port: 2525,
         auth: {
-          user: smtpSettings.user,
-          pass: smtpSettings.pass,
+          user: "f6dc085484d5a5",
+          pass: "227a672b1d9407",
         },
       });
 
@@ -19,16 +19,19 @@ const repository = (container) => {
         html: `
             <h1>Tickets for ${payload.movie.title}</h1>
 
-            <p>Cinema: ${payload.cinema.name}</p>
-            <p>Room: ${payload.cinema.room}</p>
-            <p>Seats: ${payload.cinema.seats}</p>
+            <h2>Cinema: <span>${payload.cinema.name}</span> </h2>
+            <h2>Room: <span>${payload.cinema.room}</span> </h2>
+            <h2>Seats: <span>${payload.cinema.seats}</span> </h2>
 
-            <p>description: ${payload.description}</p>
+            <h3>Movie Description: Some Description About Movie</h3>
 
-            <p>Total: ${payload.totalAmount}</p>
-            <p>Total: ${payload.orderId}</p>
+            <h4>Total: <span>${payload.totalAmount}</h4>
+            <h4>OrderID: <span>${payload.orderId}</h4>
+            <h4>Receipt: <span><a href="${payload.orderReceipt}">Receipt from Payment Service</a></h4>
 
-            <h3>Cinemas Microservice 2018, Enjoy your movie !</h3>
+            <h4>Enjoy your movie 🍿🎥 &amp; have a nice day!</h4>
+
+            <h3>&copy;Block Cinemas Microservice 2022</h3> 
           `,
       };
 
@@ -44,14 +47,13 @@ const repository = (container) => {
 
   const sendSMS = (payload) => {
     return new Promise((resolve, reject) => {
-      const { twilioSettings, twilio } = container.cradle;
-
+      const { twilio } = container.cradle;
       let transport = twilio.messages
         .create(
           {
-            body: `Tickets for ${payload.movie.title}, 
-            Cinema@${payload.cinema.name}, 
-            Room:${payload.cinema.name} & 
+            body: `Tickets for ${payload.movie.title},
+            Cinema@${payload.cinema.name},
+            Room:${payload.cinema.name} &
             Seats @${payload.cinema.seats}
             Thank You`,
             from: "+13253356157",
@@ -63,8 +65,7 @@ const repository = (container) => {
                 new Error("An error occurred processing sms, err: " + err)
               );
             } else {
-              const temp_result = Object.assign({}, { result });
-              resolve(temp_result);
+              resolve(true);
             }
           }
         )

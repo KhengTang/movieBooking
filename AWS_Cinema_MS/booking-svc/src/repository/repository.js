@@ -7,46 +7,55 @@ const repository = (container) => {
 
   const makeBooking = (user, booking) => {
     return new Promise((resolve, reject) => {
-      // const payload = {
-      //   city: booking.city,
-      //   userType: user.membership ? "loyal" : "normal",
-      //   totalAmount: booking.totalAmount,
-      //   cinema: {
-      //     name: booking.cinema,
-      //     room: booking.cinemaRoom,
-      //     seats: booking.seats.toString(),
-      //   },
-      //   movie: {
-      //     title: booking.movie.title,
-      //     format: booking.movie.format,
-      //     schedule: booking.schedule,
-      //   },
-      // };
       const payload = {
+        // city: booking.city,
+        // cinema: booking.cinema,
+        // book: {
+        //   userType: user.membership ? "loyal" : "normal",
+        //   movie: {
+        //     title: booking.movie,
+        //     format: booking.movie.format,
+        //     schedule: booking.schedule,
+        //   },
+        // },
+
         city: booking.city,
-        cinema: booking.cinema,
-        book: {
-          userType: user.membership ? "loyal" : "normal",
-          movie: {
-            title: booking.movie.title,
-            format: booking.movie.format,
-            schedule: booking.schedule,
-          },
+        userType: user.membership ? "loyal" : "normal",
+        totalAmount: booking.totalAmount,
+        cinema: {
+          name: booking.cinema,
+          room: booking.cinemaRoom,
+          seats: booking.seats.toString(),
+        },
+        movie: {
+          title: booking.movie,
+          format: booking.format,
+          schedule: booking.schedule,
         },
       };
-
-      console.info("repository.js - hit make booking \n" + payload);
+      console.info(
+        "booking.repository.js - booking Obj before insert \t" +
+          JSON.stringify(booking)
+      );
+      console.info(
+        "booking.repository.js - payload Obj before insert \t" +
+          JSON.stringify(payload)
+      );
 
       bookingCollection.insertOne(payload, (err, booked) => {
-        console.info("repository.js - hit booking Collection \n" + payload);
+        console.info(
+          "booking.repository.js - db successfully inserted \n" +
+            JSON.stringify(payload)
+        );
         if (err) {
           reject(
             new Error(
               "An error occurred registering a user booking, err:" + err
             )
           );
+        } else {
+          resolve(payload);
         }
-        resolve(payload);
       });
     });
   };
@@ -71,11 +80,30 @@ const repository = (container) => {
   // };
 
   const generateTicket = (paid, booking) => {
+    // return new Promise((resolve, reject) => {
+    //   console.log("booking-service,received paid", paid);
+    //   console.log("booking-service,received booking", booking);
+    //   const payload = Object.assign({}, booking, {
+    //     orderId: paid.charge.id,
+    //     description: paid.description,
+    //   });
+    //   // const payload = Object.assign({}, {booking, orderId: paid.charge.id, description: paid.description})
+    //   ticketsCollection.insertOne(payload, (err, ticket) => {
+    //     if (err) {
+    //       reject(
+    //         new Error("an error occurred registering a ticket, err:" + err)
+    //       );
+    //     }
+    //     resolve(payload);
+    //   });
+    // });
+
     return new Promise((resolve, reject) => {
-      //     console.log("booking-service,received paid", paid);
-      //     console.log("booking-service,received booking", booking);
-      const payload = Object.assign({}, { booking, orderId: paid._id });
-      // const payload = Object.assign({}, {booking, orderId: paid.charge.id, description: paid.description})
+      const payload = Object.assign({}, booking, {
+        orderId: paid.charge.id,
+        orderReceipt: paid.charge.receipt_url,
+        description: paid.description,
+      });
       ticketsCollection.insertOne(payload, (err, ticket) => {
         if (err) {
           reject(
@@ -104,6 +132,19 @@ const repository = (container) => {
   // };
 
   const getOrderById = (orderId) => {
+    // return new Promise((resolve, reject) => {
+    //   const ObjectID = container.resolve("ObjectID");
+    //   const query = { _id: new ObjectID(orderId) };
+    //   const response = (err, order) => {
+    //     if (err) {
+    //       reject(
+    //         new Error("An error occurred retrieving a order, err: " + err)
+    //       );
+    //     }
+    //     resolve(order);
+    //   };
+    //   bookingCollection.findOne(query, {}, response);
+    // });
     return new Promise((resolve, reject) => {
       const ObjectID = container.resolve("ObjectID");
       const query = { _id: new ObjectID(orderId) };

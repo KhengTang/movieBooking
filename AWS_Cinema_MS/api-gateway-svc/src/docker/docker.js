@@ -19,7 +19,8 @@ const discoverRoutes = (container) => {
       if (
         /mongodb/.test(name) ||
         /api-gateway-svc/.test(name) ||
-        /mongo-express/.test(name)
+        /mongo-express/.test(name) ||
+        /frontend-svc/.test(name)
       ) {
         return false;
       }

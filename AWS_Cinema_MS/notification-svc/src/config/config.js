@@ -9,13 +9,13 @@ const smtpSettings = {
   port: 2525,
   auth: {
     user: process.env.EMAIL_USERNAME || "bbce5d94fedce3",
-    pass: process.env.EMAIL_PASSWORD || "61466dd49cd218",
+    pass: process.env.EMAIL_PASSWORD || "1234512345",
   },
 };
 
 const twilioSettings = {
-  accountSid: "AC44009dbccf471adb30a29d87506e8b63",
-  authToken: "2dfc18c3a4e6fc7d4af7a6a4c4ce70af",
+  accountSid: process.env.SMS_USERNAME || "AC44009dbccf471adb30a29d87506e8b63",
+  authToken: process.env.SMS_PASSWORD || "1234512345",
 };
 
 module.exports = Object.assign(

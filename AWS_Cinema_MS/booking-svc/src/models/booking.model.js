@@ -17,6 +17,7 @@ const bookingSchema = (joi) => ({
   movie: joi.string(),
   cinemaRoom: joi.number(),
   seats: joi.array().items(joi.string()).single(),
+  format: joi.string(),
   totalAmount: joi.number(),
 });
 

@@ -9,8 +9,8 @@ const serverSettings = {
 // const tls = process.env.DOCKER_TLS_VERIFY || 0;
 // const certDir = process.env.DOCKER_CERT_PATH || "";
 
-//const machine = "tcp://localhost:2375";
-const machine = "tcp://host.docker.internal:2375";
+const machine = "tcp://localhost:2375";
+//const machine = "tcp://host.docker.internal:2375";
 const tls = 0;
 const certDir = "/certs";
 

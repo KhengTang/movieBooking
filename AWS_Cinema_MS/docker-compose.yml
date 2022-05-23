@@ -17,6 +17,21 @@ services:
     labels:
       - "apiRoute=/"
 
+  cms-frontend-svc:
+    image: aws/frontend-svc
+    container_name: frontend-svc
+    ports:
+      - 8082:8082
+    depends_on:
+      - cms-mongodb
+    command: ["npm", "start", "Dev"]
+    networks:
+      - cms-app-network
+    stdin_open: true
+    tty: true
+    labels:
+      - "apiRoute=/"
+      
   cms-notification-svc:
     image: aws/notification-svc
     env_file: ./setting.env
@@ -54,6 +69,7 @@ services:
       - PORT=3000
     depends_on:
       - cms-mongodb
+    command: ["dumb-init", "npm", "start"]
     networks:
       - cms-app-network
     stdin_open: true
@@ -143,6 +159,8 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
     labels:
       - "apiRoute=/"
+
+      
   mongo-express:
     image: mongo-express
     env_file: ./setting.env

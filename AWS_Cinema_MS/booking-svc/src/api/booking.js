@@ -10,10 +10,10 @@ module.exports = ({ repo }, app) => {
 
     // console.info("booking.js - paymentService info : " + paymentService);
     // console.info("booking.js - notificationService info : " + notificationService);
-    console.info("booking.js");
-    console.info("req : " + JSON.stringify(req.body));
-    console.info("req booking info : " + JSON.stringify(req.body.booking));
-    console.info("req user info : " + JSON.stringify(req.body.user) + "\n\n");
+    console.info("Starting At booking.js=============================>");
+    console.info("req obj: " + JSON.stringify(req.body));
+    console.info("req booking obj : " + JSON.stringify(req.body.booking));
+    console.info("req user obj : " + JSON.stringify(req.body.user) + "\n\n");
     Promise.all([
       validate(req.body.user, "user"),
       validate(req.body.booking, "booking"),
@@ -34,8 +34,7 @@ module.exports = ({ repo }, app) => {
 
         //Debug
         console.info(
-          "after validation, constructing payment -\npayment obj - " +
-            JSON.stringify(payment)
+          "Aft valid, const payment obj - " + JSON.stringify(payment) + "\n\n"
         );
         return Promise.all([
           // we call the payment service
@@ -46,42 +45,56 @@ module.exports = ({ repo }, app) => {
         ]);
       })
       .then(([paid, user, booking]) => {
+        //
+        //
+        //Debug
         console.info(
-          "after validation, constructing booking -\nuser obj - " +
+          "Aft paymentSvc, const user - " +
             JSON.stringify(user) +
-            "\nbooking obj - " +
-            JSON.stringify(booking)
+            "\booking obj - " +
+            JSON.stringify(booking) +
+            "\n\n"
         );
         return Promise.all([
-          // repo.makeBooking(user, booking),
-          // Promise.resolve(paid),
-          // Promise.resolve(user),
           repo.makeBooking(user, booking),
-          repo.generateTicket(paid, booking),
+          // repo.generateTicket(paid, booking),
+          Promise.resolve(paid),
+          Promise.resolve(user),
+          console.info(
+            "Aft makeBooking, const user - " +
+              JSON.stringify(user) +
+              "\n paid obj - " +
+              JSON.stringify(paid) +
+              "\n\n"
+          ),
         ]);
       })
-      // .then(([booking, paid, user]) => {
-      //   console.info(
-      //     "after validation, constructing ticket -\npaid obj - " +
-      //       JSON.stringify(paid) +
-      //       "\nbooking obj - " +
-      //       JSON.stringify(booking)
-      //   );
-      //   return Promise.all([
-      //     repo.generateTicket(paid, booking),
-      //     Promise.resolve(user),
-      //   ]);
-      // })
-      // .then(([ticket, user]) => {
-      //   const payload = Object.assign({}, ticket, {
-      //     user: { name: user.name + user.lastName, email: user.email },
-      //   });
-      //   notificationService(payload, headers);
-      //   res.status(status.OK).json(ticket);
-      // })
-      .then(([booked, ticket]) => {
-        // we call the notification service
-        notificationService({ booked, ticket });
+      .then(([booking, paid, user]) => {
+        return Promise.all([
+          repo.generateTicket(paid, booking),
+          Promise.resolve(user),
+          console.info(
+            "Aft generateTic, const paid - " +
+              JSON.stringify(paid) +
+              "\n booking obj - " +
+              JSON.stringify(booking) +
+              "\n user obj - " +
+              JSON.stringify(user) +
+              "\n\n"
+          ),
+        ]);
+      })
+      .then(([ticket, user]) => {
+        const payload = Object.assign({}, ticket, {
+          user: { name: user.name + user.lastName, email: user.email },
+        });
+        notificationService(payload);
+        console.info(
+          "End ===================>\n" +
+            "Aft notficationSvc, const payload - " +
+            JSON.stringify(payload) +
+            "\n\n"
+        );
         res.status(status.OK).json(ticket);
       })
       .catch(next);

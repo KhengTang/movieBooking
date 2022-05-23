@@ -1,19 +1,29 @@
 const supertest = require("supertest");
 
-const urlInDev = "localhost:3004";
+const urlInDev = "host.docker.internal:3004";
 const urlInProduction = "localhost:8080";
 
 module.exports = (paymentOrder) => {
   return new Promise((resolve, reject) => {
-    supertest(urlInProduction)
+    supertest(urlInDev)
       .post("/payment/makePurchase")
       .send({ paymentOrder })
       .end((err, res) => {
+        console.info(
+          "payment.service.js paymentOrder - " +
+            JSON.stringify(paymentOrder) +
+            "\n\n"
+        );
+
         if (err) {
           reject(
             new Error("An error occurred with the payment service, err: " + err)
           );
         }
+
+        console.info(
+          "payment.service.js svcs - " + JSON.stringify(res.body.paid) + "\n\n"
+        );
         resolve(res.body.paid);
       });
   });
